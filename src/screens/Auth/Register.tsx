@@ -31,9 +31,11 @@ export default function Register({navigation}: any): React.JSX.Element {
     },
   });
 
+  console.log(process.env.API_URL);
   const onSubmit = async (data: any) => {
     setIsLoading(true);
     console.log(data);
+
     try {
       const response = await axios.post(
         `${process.env.API_URL}/user/register`,
@@ -41,7 +43,7 @@ export default function Register({navigation}: any): React.JSX.Element {
           nama_lengkap: data.nama_lengkap,
           username: data.username,
           email: data.email.toLowerCase(),
-          Password: data.password,
+          password: data.password,
           role: '',
         },
       );
@@ -75,8 +77,12 @@ export default function Register({navigation}: any): React.JSX.Element {
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic" className="p-4">
         <View className="mt-10 w-full flex-1 items-center justify-center">
-          <Text className="text-2xl font-semibold font-jakarta">
-            Selamat datang!
+          <Image
+            source={require('../../assets/images/logo.png')}
+            className="w-32 h-32"
+          />
+          <Text className="text-2xl text-slate-800 font-bold font-jakarta">
+            Buat Akun Baru!
           </Text>
         </View>
         <View className="mt-10">
@@ -167,7 +173,7 @@ export default function Register({navigation}: any): React.JSX.Element {
         <TouchableOpacity
           disabled={isLoading}
           onPress={handleSubmit(onSubmit)}
-          className="mt-5 flex flex-row items-center justify-center space-x-3 rounded-full bg-amber-500 p-3">
+          className="mt-5 flex flex-row items-center justify-center space-x-3 rounded-full bg-emerald-700 p-3">
           {isLoading ? (
             <>
               <ActivityIndicator size="small" color="#0000ff" />
@@ -186,7 +192,7 @@ export default function Register({navigation}: any): React.JSX.Element {
           <Pressable
             onPress={() => navigation.navigate('Login')}
             className="h-14">
-            <Text className="text-lg font-jakarta text-amber-600">
+            <Text className="text-lg font-jakarta text-emerald-600">
               {' '}
               Masuk disini
             </Text>

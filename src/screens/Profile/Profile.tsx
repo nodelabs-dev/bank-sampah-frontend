@@ -1,10 +1,10 @@
 import {SafeAreaView, Text, View} from 'react-native';
 
-export default function Home() {
+export default function Profile() {
   return (
     <SafeAreaView>
       <View>
-        <Text className="text-center font-jakarta">Home Screen</Text>
+        <Text>Profile Screen</Text>
       </View>
     </SafeAreaView>
   );

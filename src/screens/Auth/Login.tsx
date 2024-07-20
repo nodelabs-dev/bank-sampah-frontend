@@ -31,13 +31,22 @@ export default function Login({navigation}: any): React.JSX.Element {
   });
 
   const onSubmit = async (data: any) => {
+    console.log(data);
     setIsLoading(true);
     try {
       const response = await axios.post(`${process.env.API_URL}/user/login`, {
         email: data.email.toLowerCase(),
         password: data.password,
       });
-      await AsyncStorage.setItem('auth', JSON.stringify(response.data));
+
+      const verifyUser = await axios.get(`${process.env.API_URL}/users`);
+      console.log('VERIFY USER ==== ', verifyUser?.data?.data);
+
+      await AsyncStorage.setItem('auth', JSON.stringify(response?.data));
+      await AsyncStorage.setItem(
+        'user',
+        JSON.stringify(verifyUser?.data?.data),
+      );
       console.log(response.data);
       navigation.navigate('MainTabs');
       setIsLoading(false);
@@ -67,8 +76,12 @@ export default function Login({navigation}: any): React.JSX.Element {
 
   return (
     <SafeAreaView className="flex flex-1">
-      <ScrollView contentInsetAdjustmentBehavior="automatic" className="p-4">
+      <ScrollView contentInsetAdjustmentBehavior="automatic" className="p-1.5">
         <View className="w-full flex items-center justify-center">
+          <Image
+            source={require('../../assets/images/logo.png')}
+            className="w-32 h-32"
+          />
           <Text className="text-2xl font-bold font-jakarta text-slate-800">
             Selamat datang!
           </Text>
@@ -101,22 +114,22 @@ export default function Login({navigation}: any): React.JSX.Element {
             control={control}
             rules={{required: true}}
             render={({field: {onChange, onBlur, value}}) => (
-              <View className="relative mt-6">
+              <View className="flex flex-row mt-6 items-center">
                 <TextInput
                   placeholder="Password"
                   secureTextEntry={!isPasswordVisible}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
-                  className="rounded-full font-jakarta border border-slate-300 p-4 pr-12"
+                  className="rounded-full w-full font-jakarta border border-slate-300 p-4 pr-12"
                 />
                 <Pressable
                   onPress={() => setIsPasswordVisible(!isPasswordVisible)}
-                  className="absolute right-6 top-3">
+                  className="absolute right-6">
                   {isPasswordVisible ? (
-                    <FeatherIcon name="eye" size={24} color={'orange'} />
+                    <FeatherIcon name="eye" size={24} color={'darkgreen'} />
                   ) : (
-                    <FeatherIcon name="eye-off" size={24} color={'orange'} />
+                    <FeatherIcon name="eye-off" size={24} color={'darkgreen'} />
                   )}
                 </Pressable>
               </View>
@@ -132,19 +145,12 @@ export default function Login({navigation}: any): React.JSX.Element {
                 Password wajib diisi
               </Text>
             )}
-            <Pressable
-              onPress={() => navigation.navigate('ForgetPassword')}
-              className="mt-1">
-              <Text className="text-right text-lg text-amber-600 font-jakarta">
-                Lupa password?
-              </Text>
-            </Pressable>
           </View>
         </View>
         <TouchableOpacity
           disabled={isLoading}
           onPress={handleSubmit(onSubmit)}
-          className="mt-10 flex flex-row items-center justify-center space-x-3 rounded-full bg-amber-500 p-3">
+          className="mt-6 flex flex-row items-center justify-center space-x-3 rounded-full bg-emerald-700 p-3">
           {isLoading ? (
             <>
               <ActivityIndicator size="small" color="#0000ff" />
@@ -163,7 +169,7 @@ export default function Login({navigation}: any): React.JSX.Element {
           <Pressable
             onPress={() => navigation.navigate('Register')}
             className="h-14">
-            <Text className="text-lg text-amber-600 font-jakarta">
+            <Text className="text-lg text-emerald-600 font-jakarta">
               {' '}
               Daftar disini
             </Text>
