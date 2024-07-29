@@ -1,27 +1,17 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useEffect, useState} from 'react';
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  View,
-  StyleSheet,
-  Platform,
-  StatusBar,
-} from 'react-native';
+import {Image, ScrollView, Text, View, Platform} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import FocusAwareStatusBar from '../../components/StatusBar';
 import StatusBarBackground from '../../components/StatusBarBackground';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import FontAwesomeOrigin from 'react-native-vector-icons/FontAwesome';
+import Menu from '../../components/Menu';
 
-export default function Home() {
+export default function Home({navigation}: any) {
   const [userData, setUserData] = useState<any>(null);
-  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     const getUserToken = async () => {
@@ -43,7 +33,7 @@ export default function Home() {
         colors={['#047857', '#34d399']}
         start={{x: 0, y: 1}}
         end={{x: 1, y: 0}}
-        className="px-5 py-12 flex mb-4 flex-row items-end justify-between rounded-b-2xl">
+        className="px-5 py-12 flex mb-0 flex-row items-end justify-between rounded-b-2xl">
         <View>
           <Image
             source={require('../../assets/images/profile.jpeg')}
@@ -64,47 +54,25 @@ export default function Home() {
           />
         </View>
       </LinearGradient>
-      <ScrollView className="mt-0 px-1.5 flex space-y-2">
-        <LinearGradient
-          colors={['#047857', '#34d399']}
-          start={{x: 0, y: 1}}
-          end={{x: 1, y: 2}}
-          className="flex flex-row items-center p-5 rounded-lg space-x-4">
+      <ScrollView className="mt-0 px-1.5">
+        <Menu
+          title="Materi Pengolahan Sampah"
+          navigate={() => navigation.navigate('Material')}>
           <Entypo name="open-book" color={'white'} size={50} />
-          <Text className="text-white font-jakarta max-w-[250px] text-xl font-semibold">
-            Materi Pengolahan Sampah
-          </Text>
-        </LinearGradient>
-        <LinearGradient
-          colors={['#047857', '#34d399']}
-          start={{x: 0, y: 1}}
-          end={{x: 1, y: 2}}
-          className="flex flex-row items-center p-5 rounded-lg space-x-4">
+        </Menu>
+        <Menu
+          title="Monitor Sampah"
+          navigate={() => navigation.navigate('Monitor')}>
           <MaterialIcons name="monitor-heart" color={'white'} size={50} />
-          <Text className="text-white font-jakarta max-w-[250px] text-xl font-semibold">
-            Monitor Sampah
-          </Text>
-        </LinearGradient>
-        <LinearGradient
-          colors={['#047857', '#34d399']}
-          start={{x: 0, y: 1}}
-          end={{x: 1, y: 2}}
-          className="flex flex-row items-center p-5 rounded-lg space-x-4">
+        </Menu>
+        <Menu title="Tukar Poin" navigate={() => navigation.navigate('Point')}>
           <FontAwesome name="coins" color={'white'} size={50} />
-          <Text className="text-white font-jakarta max-w-[250px] text-xl font-semibold">
-            Tukar Poin
-          </Text>
-        </LinearGradient>
-        <LinearGradient
-          colors={['#047857', '#34d399']}
-          start={{x: 0, y: 1}}
-          end={{x: 1, y: 2}}
-          className="flex flex-row items-center p-5 rounded-lg space-x-4">
+        </Menu>
+        <Menu
+          title="Panggil Petugas"
+          navigate={() => navigation.navigate('Monitor')}>
           <FontAwesomeOrigin name="whatsapp" color={'white'} size={50} />
-          <Text className="text-white font-jakarta max-w-[250px] text-xl font-semibold">
-            Panggil Petugas
-          </Text>
-        </LinearGradient>
+        </Menu>
       </ScrollView>
     </View>
   );

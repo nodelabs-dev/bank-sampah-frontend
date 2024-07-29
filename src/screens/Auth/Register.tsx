@@ -31,7 +31,6 @@ export default function Register({navigation}: any): React.JSX.Element {
     },
   });
 
-  console.log(process.env.API_URL);
   const onSubmit = async (data: any) => {
     setIsLoading(true);
     console.log(data);
@@ -58,6 +57,7 @@ export default function Register({navigation}: any): React.JSX.Element {
   };
 
   useEffect(() => {
+    console.log(process.env.API_URL);
     const getUserData = async () => {
       const userData = await AsyncStorage.getItem('user');
       console.log('INI REGISTER ASYNC ==== ', userData);
@@ -76,7 +76,7 @@ export default function Register({navigation}: any): React.JSX.Element {
   return (
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic" className="p-4">
-        <View className="mt-10 w-full flex-1 items-center justify-center">
+        <View className="w-full flex-1 items-center justify-center">
           <Image
             source={require('../../assets/images/logo.png')}
             className="w-32 h-32"
@@ -85,20 +85,23 @@ export default function Register({navigation}: any): React.JSX.Element {
             Buat Akun Baru!
           </Text>
         </View>
-        <View className="mt-10">
+        <View className="mt-6">
           <Controller
             control={control}
             rules={{
               required: true,
             }}
             render={({field: {onChange, onBlur, value}}) => (
-              <TextInput
-                placeholder="Email"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                className="rounded-full border font-jakarta border-slate-300 p-4"
-              />
+              <View>
+                <Text className="font-jakarta mb-1.5 ml-3">Email</Text>
+                <TextInput
+                  placeholder="Email"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  className="rounded-full border font-jakarta border-slate-300 p-4"
+                />
+              </View>
             )}
             name="email"
           />
@@ -112,13 +115,16 @@ export default function Register({navigation}: any): React.JSX.Element {
               required: true,
             }}
             render={({field: {onChange, onBlur, value}}) => (
-              <TextInput
-                placeholder="Nama Lengkap"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                className="mt-6 rounded-full border font-jakarta border-slate-300 p-4"
-              />
+              <View className="mt-3.5">
+                <Text className="font-jakarta ml-3 mb-1.5">Nama Lengkap</Text>
+                <TextInput
+                  placeholder="Nama Lengkap"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  className="rounded-full border font-jakarta border-slate-300 p-4"
+                />
+              </View>
             )}
             name="nama_lengkap"
           />
@@ -134,13 +140,16 @@ export default function Register({navigation}: any): React.JSX.Element {
               required: true,
             }}
             render={({field: {onChange, onBlur, value}}) => (
-              <TextInput
-                placeholder="Username"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                className="mt-6 rounded-full border font-jakarta border-slate-300 p-4"
-              />
+              <View className="mt-3.5">
+                <Text className="mb-1.5 ml-3 font-jakarta">Username</Text>
+                <TextInput
+                  placeholder="Username"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  className="rounded-full border font-jakarta border-slate-300 p-4"
+                />
+              </View>
             )}
             name="username"
           />
@@ -156,13 +165,16 @@ export default function Register({navigation}: any): React.JSX.Element {
               required: true,
             }}
             render={({field: {onChange, onBlur, value}}) => (
-              <TextInput
-                placeholder="Buat Password"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                className="mt-6 rounded-full border font-jakarta border-slate-300 p-4"
-              />
+              <View className="mt-3.5">
+                <Text className="ml-3 mb-1.5 font-jakarta">Buat Password</Text>
+                <TextInput
+                  placeholder="Buat Password"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  className="rounded-full border font-jakarta border-slate-300 p-4"
+                />
+              </View>
             )}
             name="password"
           />

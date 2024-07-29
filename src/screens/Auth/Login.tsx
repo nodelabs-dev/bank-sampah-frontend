@@ -39,7 +39,7 @@ export default function Login({navigation}: any): React.JSX.Element {
         password: data.password,
       });
 
-      const verifyUser = await axios.get(`${process.env.API_URL}/users`);
+      const verifyUser = await axios.get(`${process.env.API_URL}/users/users`);
       console.log('VERIFY USER ==== ', verifyUser?.data?.data);
 
       await AsyncStorage.setItem('auth', JSON.stringify(response?.data));
@@ -58,6 +58,7 @@ export default function Login({navigation}: any): React.JSX.Element {
   };
 
   useEffect(() => {
+    console.log('API_URL LOGIN ==== ', process.env.API_URL);
     const getUserData = async () => {
       const userData = await AsyncStorage.getItem('auth');
       console.log('INI LOGIN ASYNC ==== ', userData);
@@ -94,13 +95,16 @@ export default function Login({navigation}: any): React.JSX.Element {
             control={control}
             rules={{required: true}}
             render={({field: {onChange, onBlur, value}}) => (
-              <TextInput
-                placeholder="Email"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                className="rounded-full font-jakarta border border-slate-300 p-4"
-              />
+              <View>
+                <Text className="font-jakarta mb-3 ml-3">Email</Text>
+                <TextInput
+                  placeholder="Email"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  className="rounded-full font-jakarta border border-slate-300 p-4"
+                />
+              </View>
             )}
             name="email"
           />
@@ -114,24 +118,31 @@ export default function Login({navigation}: any): React.JSX.Element {
             control={control}
             rules={{required: true}}
             render={({field: {onChange, onBlur, value}}) => (
-              <View className="flex flex-row mt-6 items-center">
-                <TextInput
-                  placeholder="Password"
-                  secureTextEntry={!isPasswordVisible}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                  className="rounded-full w-full font-jakarta border border-slate-300 p-4 pr-12"
-                />
-                <Pressable
-                  onPress={() => setIsPasswordVisible(!isPasswordVisible)}
-                  className="absolute right-6">
-                  {isPasswordVisible ? (
-                    <FeatherIcon name="eye" size={24} color={'darkgreen'} />
-                  ) : (
-                    <FeatherIcon name="eye-off" size={24} color={'darkgreen'} />
-                  )}
-                </Pressable>
+              <View className="mt-6">
+                <Text className="font-jakarta mb-3 ml-3">Password</Text>
+                <View className="flex flex-row items-center">
+                  <TextInput
+                    placeholder="Password"
+                    secureTextEntry={!isPasswordVisible}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    className="rounded-full w-full font-jakarta border border-slate-300 p-4 pr-12"
+                  />
+                  <Pressable
+                    onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                    className="absolute right-6">
+                    {isPasswordVisible ? (
+                      <FeatherIcon name="eye" size={24} color={'darkgreen'} />
+                    ) : (
+                      <FeatherIcon
+                        name="eye-off"
+                        size={24}
+                        color={'darkgreen'}
+                      />
+                    )}
+                  </Pressable>
+                </View>
               </View>
             )}
             name="password"
