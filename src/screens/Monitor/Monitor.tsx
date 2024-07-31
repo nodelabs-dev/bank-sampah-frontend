@@ -29,7 +29,7 @@ export default function Monitor({navigation}: any) {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.API_URL}/tukarpoin/create`,
+        `${process.env.API_URL}/transaksi/tukar-poin`,
         {
           jenis_sampah: data.jenis_sampah,
           berat_sampah: Number(data.berat_sampah),
@@ -37,9 +37,10 @@ export default function Monitor({navigation}: any) {
       );
 
       console.log(response.data);
+      const trashId = response?.data?.id;
       setIsLoading(false);
       AlertPopup('Berhasil', 'Berhasil menukar sampah dengan poin.');
-      navigation.navigate('ScanQR');
+      navigation.navigate('ScanQR', {trashId});
     } catch (error) {
       console.error(error);
       setIsLoading(false);

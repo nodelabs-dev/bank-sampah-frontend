@@ -15,9 +15,27 @@ import Point from './src/screens/Point/Point';
 import ScanQR from './src/screens/Monitor/ScanQR';
 import QRScanner from './src/screens/Monitor/QRScanner';
 import {ActivityIndicator, View} from 'react-native';
+import Edit from './src/screens/Profile/Edit';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+function ProfileStack() {
+  return (
+    <Stack.Navigator initialRouteName="Profile">
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{headerShown: false, title: 'Profile'}}
+      />
+      <Stack.Screen
+        name="Edit"
+        component={Edit}
+        options={{headerShown: true, title: 'Edit Profile'}}
+      />
+    </Stack.Navigator>
+  );
+}
 
 function HomeStack() {
   return (
@@ -68,7 +86,7 @@ function MainTabs() {
             iconName = 'home';
           } else if (route.name === 'Riwayat') {
             iconName = 'reload1';
-          } else if (route.name === 'Profile') {
+          } else if (route.name === 'ProfileStack') {
             iconName = 'user';
           } else {
             iconName = '';
@@ -91,8 +109,8 @@ function MainTabs() {
         options={{headerShown: true, title: 'Riwayat'}}
       />
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="ProfileStack"
+        component={ProfileStack}
         options={{headerShown: false, title: 'Profile'}}
       />
     </Tab.Navigator>

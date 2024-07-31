@@ -47,9 +47,9 @@ export default function History({navigation}: any) {
             history?.map((item: any) => (
               <HistoryCard
                 key={item?.id}
-                title={item?.jenis_sampah}
-                description={item?.berat_sampah}
-                category={formatDateTime(item?.created_at)}
+                trash={item?.jenis_sampah}
+                weight={item?.berat_sampah}
+                createdAt={formatDateTime(item?.created_at)}
                 navigate={() => navigation.navigate('Material')}>
                 <Image
                   source={{
@@ -60,7 +60,7 @@ export default function History({navigation}: any) {
               </HistoryCard>
             ))
           ) : (
-            <Text>Materi Kosong</Text>
+            <Text>Riwayat Kosong</Text>
           )}
         </ScrollView>
       )}

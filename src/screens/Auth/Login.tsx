@@ -164,7 +164,7 @@ export default function Login({navigation}: any): React.JSX.Element {
           className="mt-6 flex flex-row items-center justify-center space-x-3 rounded-full bg-emerald-700 p-3">
           {isLoading ? (
             <>
-              <ActivityIndicator size="small" color="#0000ff" />
+              <ActivityIndicator size="small" color="#ffffff" />
               <Text className="text-center text-xl font-semibold text-white">
                 Tunggu sebentar
               </Text>

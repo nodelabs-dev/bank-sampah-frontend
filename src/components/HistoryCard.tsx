@@ -4,9 +4,9 @@ import LinearGradient from 'react-native-linear-gradient';
 
 export default function HistoryCard({
   navigate,
-  title,
-  description,
-  category,
+  trash,
+  weight,
+  createdAt,
   children,
 }: any) {
   return (
@@ -24,7 +24,7 @@ export default function HistoryCard({
                 Jenis Sampah
               </Text>
               <Text className="text-white font-jakarta text-2xl font-bold">
-                {title}
+                {trash}
               </Text>
             </View>
             <View>
@@ -32,13 +32,13 @@ export default function HistoryCard({
                 Berat Sampah (g)
               </Text>
               <Text className="text-white font-jakarta text-2xl font-bold">
-                {description}
+                {weight}
               </Text>
             </View>
           </View>
           <View className="mt-9 bg-orange-600 w-auto p-1 rounded-md">
             <Text className="text-white text-center font-semibold font-jakarta">
-              {category}
+              {createdAt}
             </Text>
           </View>
         </View>

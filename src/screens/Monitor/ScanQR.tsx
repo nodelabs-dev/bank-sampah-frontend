@@ -8,22 +8,28 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import QRScanner from './QRScanner';
+import axios from 'axios';
 const dWidth = Dimensions.get('window').width;
 
 const clr1 = 'mediumseagreen';
 
-const ScanQRPage = () => {
+const ScanQRPage = ({route}: any) => {
   const [showQR, setShowQR] = useState(false);
   const [qrCode, setQrCode] = useState('');
+
+  const {trashId} = route.params;
+  console.log(trashId);
 
   const openQRscanner = () => {
     setShowQR(true);
   };
 
-  const onQrRead = (qrtext: any) => {
+  const onQrRead = async (qrtext: any) => {
     setQrCode(qrtext);
     setShowQR(false);
   };
+
+  console.log('QR CODE ==== ', qrCode);
 
   return (
     <View style={styles.page}>
@@ -40,7 +46,7 @@ const ScanQRPage = () => {
       <TouchableOpacity onPress={() => openQRscanner()} style={styles.btn}>
         <Text style={{color: clr1}}>Scan QR</Text>
       </TouchableOpacity>
-      {showQR ? <QRScanner onRead={onQrRead} /> : null}
+      {showQR ? <QRScanner trashId={trashId} onRead={onQrRead} /> : null}
     </View>
   );
 };

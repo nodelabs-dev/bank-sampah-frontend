@@ -6,6 +6,7 @@ import {
   useCodeScanner,
 } from 'react-native-vision-camera';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
 
 const QRScanner = (props: any) => {
   const [hasPermission, setHasPermission] = useState(false);
@@ -16,7 +17,19 @@ const QRScanner = (props: any) => {
     onCodeScanned: codes => {
       console.log(`onCodeScanned `, codes);
       console.log(`onCodeScanned value`, codes[0].value);
+      console.log('TRASH IDDD ==== ', props.trashId);
       props.onRead(codes[0].value);
+
+      axios
+        .post(`${process.env.API_URL}/transaksi/tukar-poin/${props?.trashId}`, {
+          emailAdmin: codes[0].value,
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
   });
 
