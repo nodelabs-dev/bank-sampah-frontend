@@ -8,14 +8,14 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import QRScanner from './QRScanner';
-import axios from 'axios';
 const dWidth = Dimensions.get('window').width;
 
 const clr1 = 'mediumseagreen';
 
-const ScanQRPage = ({route}: any) => {
+const ScanQRPage = ({route, navigation}: any) => {
   const [showQR, setShowQR] = useState(false);
   const [qrCode, setQrCode] = useState('');
+  const [isQRScanned, setIsQRScanned] = useState(false);
 
   const {trashId} = route.params;
   console.log(trashId);
@@ -27,15 +27,16 @@ const ScanQRPage = ({route}: any) => {
   const onQrRead = async (qrtext: any) => {
     setQrCode(qrtext);
     setShowQR(false);
+    setIsQRScanned(true);
   };
 
   console.log('QR CODE ==== ', qrCode);
 
   return (
     <View style={styles.page}>
-      {qrCode ? (
-        <Text style={{fontSize: 16, color: 'black'}}>
-          {'QR Value \n' + qrCode}
+      {isQRScanned ? (
+        <Text className="text-center font-jakarta text-xl font-semibold text-emerald-600">
+          SCAN QR BERHASIL!
         </Text>
       ) : null}
       <Ionicons
@@ -43,9 +44,17 @@ const ScanQRPage = ({route}: any) => {
         size={qrCode ? dWidth * 0.4 : dWidth * 0.75}
         color={clr1}
       />
-      <TouchableOpacity onPress={() => openQRscanner()} style={styles.btn}>
-        <Text style={{color: clr1}}>Scan QR</Text>
-      </TouchableOpacity>
+      {isQRScanned ? (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('History')}
+          style={styles.btn}>
+          <Text style={{color: clr1}}>Cek Riwayat</Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={() => openQRscanner()} style={styles.btn}>
+          <Text style={{color: clr1}}>Scan QR</Text>
+        </TouchableOpacity>
+      )}
       {showQR ? <QRScanner trashId={trashId} onRead={onQrRead} /> : null}
     </View>
   );

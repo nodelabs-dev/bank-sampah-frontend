@@ -25,7 +25,7 @@ const QRScanner = (props: any) => {
           emailAdmin: codes[0].value,
         })
         .then(res => {
-          console.log(res);
+          console.log('RESPONSE SESUDAH SCAN QR ==== ', res.data);
         })
         .catch(error => {
           console.error(error);

@@ -7,12 +7,14 @@ import {
   View,
 } from 'react-native';
 import {Controller, useForm} from 'react-hook-form';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import axios from 'axios';
+import {Picker} from '@react-native-picker/picker';
 import AlertPopup from '../../components/Alert';
 
 export default function Monitor({navigation}: any) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [trashTypes, setTrashTypes] = useState<any[]>([]);
   const {
     control,
     handleSubmit,
@@ -23,6 +25,21 @@ export default function Monitor({navigation}: any) {
       berat_sampah: '',
     },
   });
+
+  useEffect(() => {
+    const fetchTrashTypes = async () => {
+      try {
+        const response = await axios.get(
+          'https://be-zerowastemate.vercel.app/jenissampah',
+        );
+        setTrashTypes(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchTrashTypes();
+  }, []);
 
   const onSubmit = async (data: any) => {
     console.log(data);
@@ -61,18 +78,24 @@ export default function Monitor({navigation}: any) {
           <Controller
             control={control}
             rules={{required: true}}
-            render={({field: {onChange, onBlur, value}}) => (
-              <View className="flex ">
+            render={({field: {onChange, value}}) => (
+              <View className="flex">
                 <Text className="text-slate-600 font-jakarta">
                   Jenis Sampah
                 </Text>
-                <TextInput
-                  placeholder="cth: Plastik"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                  className="rounded-lg mt-2 font-jakarta border border-slate-300 p-4"
-                />
+                <Picker
+                  selectedValue={value}
+                  onValueChange={onChange}
+                  className="rounded-lg mt-2 font-jakarta border border-slate-300 p-4">
+                  <Picker.Item label="Pilih jenis sampah" value="" />
+                  {trashTypes.map(item => (
+                    <Picker.Item
+                      key={item.id}
+                      label={item.jenis_sampah}
+                      value={item.jenis_sampah}
+                    />
+                  ))}
+                </Picker>
               </View>
             )}
             name="jenis_sampah"

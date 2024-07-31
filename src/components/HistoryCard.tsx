@@ -23,7 +23,7 @@ export default function HistoryCard({
               <Text className="font-jakarta text-white text-xs">
                 Jenis Sampah
               </Text>
-              <Text className="text-white font-jakarta text-2xl font-bold">
+              <Text className="text-white font-jakarta text-xl font-bold">
                 {trash}
               </Text>
             </View>
@@ -31,7 +31,7 @@ export default function HistoryCard({
               <Text className="font-jakarta text-white text-xs">
                 Berat Sampah (g)
               </Text>
-              <Text className="text-white font-jakarta text-2xl font-bold">
+              <Text className="text-white font-jakarta text-xl font-bold">
                 {weight}
               </Text>
             </View>

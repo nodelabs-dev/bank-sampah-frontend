@@ -22,7 +22,11 @@ export default function History({navigation}: any) {
       const response = await axios.get(
         `${process.env.API_URL}/riwayat/tukar-poin`,
       );
-      setHistory(response?.data?.data);
+      const sortedHistory = response?.data?.data?.sort(
+        (a: any, b: any) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+      );
+      setHistory(sortedHistory);
       setIsLoading(false);
     } catch (error) {
       console.error(error);
@@ -35,6 +39,7 @@ export default function History({navigation}: any) {
       getHistoryPointTradeHandler();
     }, []),
   );
+
   return (
     <SafeAreaView className="flex flex-1 justify-center">
       {isLoading ? (

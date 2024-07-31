@@ -1,6 +1,5 @@
 import {
   ActivityIndicator,
-  Image,
   SafeAreaView,
   ScrollView,
   Text,
@@ -10,6 +9,7 @@ import Menu from '../../components/Menu';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import Article from '../../components/Material';
+import SkeletonImage from '../../components/SkeletonImage'; // Import the new component
 
 export default function Material({navigation}: any) {
   const [material, setMaterial] = useState<any>(null);
@@ -31,12 +31,13 @@ export default function Material({navigation}: any) {
 
     getMaterialsHandler();
   }, []);
+
   return (
     <SafeAreaView className="flex flex-1 justify-center">
       {isLoading ? (
         <ActivityIndicator size={'large'} color={'black'} />
       ) : (
-        <ScrollView className="px-1.5">
+        <ScrollView className="px-1.5 mb-2">
           {material ? (
             material?.map((item: any) => (
               <Article
@@ -45,11 +46,9 @@ export default function Material({navigation}: any) {
                 description={item?.deskripsi}
                 category={item?.kategori}
                 navigate={() => navigation.navigate('Material')}>
-                <Image
-                  source={{
-                    uri: 'https://dlh.semarangkota.go.id/wp-content/uploads/2023/01/image_2023-01-02_153843788.png',
-                  }}
-                  className="w-28 h-28 rounded-md"
+                <SkeletonImage
+                  uri={item?.url_img}
+                  style={{width: 112, height: 112, borderRadius: 8}}
                 />
               </Article>
             ))
