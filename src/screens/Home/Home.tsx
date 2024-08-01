@@ -57,6 +57,11 @@ export default function Home({navigation}: any) {
             </Text>
           </View>
           <Text className="font-jakarta text-white">ZEROWASTEMATE</Text>
+          <View className="mt-3">
+            <Text className="text-white font-jakarta">
+              Poin Anda <Text className="font-bold">{userData?.poin} Poin</Text>
+            </Text>
+          </View>
         </View>
         <View>
           <Image
