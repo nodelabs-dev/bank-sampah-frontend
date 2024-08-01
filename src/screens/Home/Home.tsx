@@ -68,7 +68,7 @@ export default function Home({navigation}: any) {
       <ScrollView className="mt-0 px-1.5">
         <Menu
           title="Materi Pengolahan Sampah"
-          navigate={() => navigation.navigate('MaterialStack')}>
+          navigate={() => navigation.navigate('Material')}>
           <Entypo name="open-book" color={'white'} size={50} />
         </Menu>
         <Menu

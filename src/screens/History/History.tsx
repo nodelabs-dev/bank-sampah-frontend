@@ -47,7 +47,7 @@ export default function History({navigation}: any) {
           <ActivityIndicator size={'large'} color={'black'} />
         </View>
       ) : (
-        <ScrollView className="px-1.5">
+        <ScrollView className="px-1.5" showsVerticalScrollIndicator={false}>
           {history ? (
             history?.map((item: any) => (
               <HistoryCard

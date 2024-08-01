@@ -37,23 +37,22 @@ export default function Material({navigation}: any) {
       {isLoading ? (
         <ActivityIndicator size={'large'} color={'black'} />
       ) : (
-        <ScrollView className="px-1.5 mb-2">
+        <ScrollView
+          className="px-1.5 mb-2"
+          showsVerticalScrollIndicator={false}>
           {material ? (
             material?.map((item: any) => (
-              <TouchableOpacity
+              <Article
                 key={item?.id}
-                onPress={() => navigation.navigate('MaterialDetail', {item})}>
-                <Article
-                  title={item?.judul}
-                  description={item?.deskripsi}
-                  category={item?.kategori}
-                  navigate={() => navigation.navigate('Material')}>
-                  <SkeletonImage
-                    uri={item?.url_img}
-                    style={{width: 112, height: 112, borderRadius: 8}}
-                  />
-                </Article>
-              </TouchableOpacity>
+                navigate={() => navigation.navigate('MaterialDetail', {item})}
+                title={item?.judul}
+                description={item?.deskripsi}
+                category={item?.kategori}>
+                <SkeletonImage
+                  uri={item?.url_img}
+                  style={{width: 112, height: 112, borderRadius: 8}}
+                />
+              </Article>
             ))
           ) : (
             <Text>Materi Kosong</Text>

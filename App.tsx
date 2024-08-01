@@ -21,23 +21,6 @@ import MaterialDetail from './src/screens/Material/MaterialDetail';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function MaterialStack() {
-  return (
-    <Stack.Navigator initialRouteName="Material">
-      <Stack.Screen
-        name="Material"
-        component={Material}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="MaterialDetail"
-        component={MaterialDetail}
-        options={{headerShown: true, title: 'Artikel'}}
-      />
-    </Stack.Navigator>
-  );
-}
-
 function ProfileStack() {
   return (
     <Stack.Navigator initialRouteName="Profile">
@@ -64,9 +47,14 @@ function HomeStack() {
         options={{headerShown: false, title: 'Home'}}
       />
       <Stack.Screen
-        name="MaterialStack"
-        component={MaterialStack}
+        name="Material"
+        component={Material}
         options={{headerShown: true, title: 'Materi Pengolahan Sampah'}}
+      />
+      <Stack.Screen
+        name="MaterialDetail"
+        component={MaterialDetail}
+        options={{headerShown: true, title: 'Artikel'}}
       />
       <Stack.Screen
         name="Monitor"
