@@ -8,7 +8,7 @@ const SkeletonImage = ({uri, style}: any) => {
     <View style={[style, styles.container]}>
       {isLoading && (
         <View style={styles.skeleton}>
-          <ActivityIndicator size="small" color="#ffffff" />
+          <ActivityIndicator size="small" color="#000" />
         </View>
       )}
       <Image

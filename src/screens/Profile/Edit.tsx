@@ -24,17 +24,17 @@ export default function Edit() {
     reset,
   } = useForm({
     defaultValues: {
-      Fullname: '',
-      PhoneNumber: '',
-      Password: '',
-      Role: '',
-      Address: '',
+      nama_lengkap: '',
+      username: '',
+      poin: '',
+      email: '',
+      role: '',
     },
   });
 
   const fetchtUserData = async () => {
     const response = await axios.get(`${process.env.API_URL}/users/users`);
-    await AsyncStorage.setItem('user', JSON.stringify(response.data));
+    await AsyncStorage.setItem('user', JSON.stringify(response.data?.data));
 
     console.log('INI DATA USER === ', response.data);
   };
@@ -43,13 +43,13 @@ export default function Edit() {
     setIsLoading(true);
     try {
       const response = await axios.put(
-        `${process.env.API_URL}/verify/user/update`,
+        `${process.env.API_URL}/users/update-data`,
         {
-          Fullname: data.Fullname,
-          Email: user?.data?.Email,
-          PhoneNumber: data.PhoneNumber,
-          Password: user?.data?.Password,
-          Address: data.Address,
+          nama_lengkap: data?.nama_lengkap,
+          username: data?.username,
+          Poin: user?.poin,
+          email: user?.email,
+          role: '',
         },
       );
 
@@ -78,11 +78,8 @@ export default function Edit() {
       console.log('USER DATA EDIT ====', userData);
       setUser(userData);
       reset({
-        Fullname: userData?.data?.Fullname,
-        PhoneNumber: userData?.data?.PhoneNumber || '',
-        Password: userData?.data?.Password,
-        Role: userData?.data?.Role || '',
-        Address: userData?.data?.Address || '',
+        nama_lengkap: userData?.nama_lengkap,
+        username: userData?.username,
       });
     };
 
@@ -105,11 +102,11 @@ export default function Edit() {
                 className="font-jakarta rounded-lg border border-slate-300 p-4"
               />
             )}
-            name="Fullname"
+            name="nama_lengkap"
           />
-          {errors.Fullname && (
+          {errors.nama_lengkap && (
             <Text className="font-jakarta mt-2 pl-4 text-red-500">
-              Nomor hp wajib diisi
+              Nama lengkap wajib diisi
             </Text>
           )}
           <Controller
@@ -117,38 +114,18 @@ export default function Edit() {
             rules={{required: true}}
             render={({field: {onChange, onBlur, value}}) => (
               <TextInput
-                placeholder="Nomor Telepon"
+                placeholder="Username"
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
                 className="font-jakarta mt-2 rounded-lg border border-slate-300 p-4"
               />
             )}
-            name="PhoneNumber"
+            name="username"
           />
-          {errors.PhoneNumber && (
+          {errors.username && (
             <Text className="font-jakarta mt-2 pl-4 text-red-500">
-              Nomor hp wajib diisi
-            </Text>
-          )}
-
-          <Controller
-            control={control}
-            rules={{required: true}}
-            render={({field: {onChange, onBlur, value}}) => (
-              <TextInput
-                placeholder="Alamat"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                className="font-jakarta mt-2 rounded-lg border border-slate-300 p-4"
-              />
-            )}
-            name="Address"
-          />
-          {errors.Address && (
-            <Text className="font-jakarta mt-2 pl-4 text-red-500">
-              Alamat wajib diisi
+              Username wajib diisi
             </Text>
           )}
         </View>

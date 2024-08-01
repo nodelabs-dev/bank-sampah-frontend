@@ -9,12 +9,23 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import FontAwesomeOrigin from 'react-native-vector-icons/FontAwesome';
 import Menu from '../../components/Menu';
+import axios from 'axios';
 
 export default function Home({navigation}: any) {
   const [userData, setUserData] = useState<any>(null);
 
   useEffect(() => {
     const getUserToken = async () => {
+      try {
+        const verifyUser = await axios.get(
+          `${process.env.API_URL}/users/users`,
+        );
+        console.log('VERIFY USER ==== ', verifyUser?.data?.data);
+      } catch (error) {
+        console.error('VERIFY USER ERROR ==== ', error);
+        navigation.navigate('Login');
+      }
+
       const user: any = await AsyncStorage.getItem('user');
       setUserData(JSON.parse(user));
     };
@@ -57,7 +68,7 @@ export default function Home({navigation}: any) {
       <ScrollView className="mt-0 px-1.5">
         <Menu
           title="Materi Pengolahan Sampah"
-          navigate={() => navigation.navigate('Material')}>
+          navigate={() => navigation.navigate('MaterialStack')}>
           <Entypo name="open-book" color={'white'} size={50} />
         </Menu>
         <Menu

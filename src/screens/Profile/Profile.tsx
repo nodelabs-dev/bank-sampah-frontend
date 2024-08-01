@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   Linking,
   ActivityIndicator,
-  Platform,
   Image,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -19,6 +18,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 export default function Profile({navigation}: any) {
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLogoutLoading, setIsLogoutLoading] = useState<boolean>(false);
 
   const getUserData = async () => {
     setIsLoading(true);
@@ -26,6 +26,7 @@ export default function Profile({navigation}: any) {
       const response: any = await AsyncStorage.getItem('user');
       console.log('INI DATA USERR === ', response);
       setUser(JSON.parse(response));
+
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -40,14 +41,17 @@ export default function Profile({navigation}: any) {
   );
 
   const handleLogout = async () => {
+    setIsLogoutLoading(true);
     try {
       const response = await axios.post(`${process.env.API_URL}/users/logout`);
       await AsyncStorage.removeItem('user');
       await AsyncStorage.removeItem('auth');
+      setIsLogoutLoading(false);
       console.log(response.data);
       navigation.replace('Login');
     } catch (error) {
       console.error(error);
+      setIsLogoutLoading(false);
     }
   };
 
@@ -125,9 +129,15 @@ export default function Profile({navigation}: any) {
                 className="flex flex-row items-center space-x-3"
                 onPress={handleLogout}>
                 <AntDesign name={'logout'} size={20} color={'red'} />
-                <Text className="font-jakarta text-lg font-medium text-red-500">
-                  Keluar
-                </Text>
+                {isLogoutLoading ? (
+                  <View className="flex items-center justify-center">
+                    <ActivityIndicator size={'large'} color={'#000'} />
+                  </View>
+                ) : (
+                  <Text className="font-jakarta text-lg font-medium text-red-500">
+                    Keluar
+                  </Text>
+                )}
               </TouchableOpacity>
             </View>
           </View>

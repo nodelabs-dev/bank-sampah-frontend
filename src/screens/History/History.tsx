@@ -20,7 +20,7 @@ export default function History({navigation}: any) {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.API_URL}/riwayat/tukar-poin`,
+        `${process.env.API_URL}/admin/tukar-poin`,
       );
       const sortedHistory = response?.data?.data?.sort(
         (a: any, b: any) =>

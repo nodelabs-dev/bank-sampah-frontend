@@ -16,9 +16,27 @@ import ScanQR from './src/screens/Monitor/ScanQR';
 import QRScanner from './src/screens/Monitor/QRScanner';
 import {ActivityIndicator, View} from 'react-native';
 import Edit from './src/screens/Profile/Edit';
+import MaterialDetail from './src/screens/Material/MaterialDetail';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+function MaterialStack() {
+  return (
+    <Stack.Navigator initialRouteName="Material">
+      <Stack.Screen
+        name="Material"
+        component={Material}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="MaterialDetail"
+        component={MaterialDetail}
+        options={{headerShown: true, title: 'Artikel'}}
+      />
+    </Stack.Navigator>
+  );
+}
 
 function ProfileStack() {
   return (
@@ -46,8 +64,8 @@ function HomeStack() {
         options={{headerShown: false, title: 'Home'}}
       />
       <Stack.Screen
-        name="Material"
-        component={Material}
+        name="MaterialStack"
+        component={MaterialStack}
         options={{headerShown: true, title: 'Materi Pengolahan Sampah'}}
       />
       <Stack.Screen
@@ -132,7 +150,6 @@ export default function App() {
   }, []);
 
   if (isLoading) {
-    // Optionally add a loading screen here
     <View className="flex flex-1 justify-center items-center bg-white">
       <ActivityIndicator size={'large'} color={'white'} />
     </View>;

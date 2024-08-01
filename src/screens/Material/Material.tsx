@@ -3,13 +3,13 @@ import {
   SafeAreaView,
   ScrollView,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import Menu from '../../components/Menu';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import Article from '../../components/Material';
-import SkeletonImage from '../../components/SkeletonImage'; // Import the new component
+import SkeletonImage from '../../components/SkeletonImage';
 
 export default function Material({navigation}: any) {
   const [material, setMaterial] = useState<any>(null);
@@ -40,17 +40,20 @@ export default function Material({navigation}: any) {
         <ScrollView className="px-1.5 mb-2">
           {material ? (
             material?.map((item: any) => (
-              <Article
+              <TouchableOpacity
                 key={item?.id}
-                title={item?.judul}
-                description={item?.deskripsi}
-                category={item?.kategori}
-                navigate={() => navigation.navigate('Material')}>
-                <SkeletonImage
-                  uri={item?.url_img}
-                  style={{width: 112, height: 112, borderRadius: 8}}
-                />
-              </Article>
+                onPress={() => navigation.navigate('MaterialDetail', {item})}>
+                <Article
+                  title={item?.judul}
+                  description={item?.deskripsi}
+                  category={item?.kategori}
+                  navigate={() => navigation.navigate('Material')}>
+                  <SkeletonImage
+                    uri={item?.url_img}
+                    style={{width: 112, height: 112, borderRadius: 8}}
+                  />
+                </Article>
+              </TouchableOpacity>
             ))
           ) : (
             <Text>Materi Kosong</Text>
