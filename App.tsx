@@ -17,6 +17,8 @@ import QRScanner from './src/screens/Monitor/QRScanner';
 import {ActivityIndicator, View} from 'react-native';
 import Edit from './src/screens/Profile/Edit';
 import MaterialDetail from './src/screens/Material/MaterialDetail';
+import PointDetail from './src/screens/Point/PointDetail';
+import Success from './src/screens/Point/Success';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -65,6 +67,16 @@ function HomeStack() {
         name="Point"
         component={Point}
         options={{headerShown: true, title: 'Tukar Poin'}}
+      />
+      <Stack.Screen
+        name="PointDetail"
+        component={PointDetail}
+        options={{headerShown: true, title: 'Detail Barang'}}
+      />
+      <Stack.Screen
+        name="Success"
+        component={Success}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="ScanQR"

@@ -1,11 +1,4 @@
-import {
-  ActivityIndicator,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {ActivityIndicator, SafeAreaView, ScrollView, Text} from 'react-native';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import Article from '../../components/Material';
