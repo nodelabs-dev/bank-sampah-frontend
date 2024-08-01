@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useFocusEffect} from '@react-navigation/native';
 import axios from 'axios';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
   ActivityIndicator,
@@ -15,7 +16,7 @@ import {
 
 export default function Edit() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isEditLoading, setIsEditLoading] = useState<boolean>(false);
+  const [isScreenLoading, setIsScreenLoading] = useState<boolean>(false);
   const [user, setUser] = useState<any>(null);
   const {
     control,
@@ -47,7 +48,7 @@ export default function Edit() {
         {
           nama_lengkap: data?.nama_lengkap,
           username: data?.username,
-          Poin: user?.poin,
+          poin: user?.poin,
           email: user?.email,
           role: '',
         },
@@ -71,8 +72,9 @@ export default function Edit() {
       },
     ]);
 
-  useEffect(() => {
-    const getUserProfile = async () => {
+  const getUserProfile = async () => {
+    setIsScreenLoading(true);
+    try {
       const response = await AsyncStorage.getItem('user');
       const userData = JSON.parse(response ?? '');
       console.log('USER DATA EDIT ====', userData);
@@ -81,72 +83,90 @@ export default function Edit() {
         nama_lengkap: userData?.nama_lengkap,
         username: userData?.username,
       });
-    };
+      setIsScreenLoading(false);
+    } catch (error) {
+      console.error(error);
+      setIsScreenLoading(false);
+    }
+  };
 
-    getUserProfile();
-  }, [reset]);
+  useFocusEffect(
+    useCallback(() => {
+      getUserProfile();
+    }, [reset]),
+  );
 
   return (
     <SafeAreaView className="flex flex-1 bg-white">
-      <ScrollView className="p-1.5" showsVerticalScrollIndicator={false}>
-        <View className="mt-1">
-          <Controller
-            control={control}
-            rules={{required: true}}
-            render={({field: {onChange, onBlur, value}}) => (
-              <TextInput
-                placeholder="Nama Lengkap"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                className="font-jakarta rounded-lg border border-slate-300 p-4"
-              />
-            )}
-            name="nama_lengkap"
-          />
-          {errors.nama_lengkap && (
-            <Text className="font-jakarta mt-2 pl-4 text-red-500">
-              Nama lengkap wajib diisi
-            </Text>
-          )}
-          <Controller
-            control={control}
-            rules={{required: true}}
-            render={({field: {onChange, onBlur, value}}) => (
-              <TextInput
-                placeholder="Username"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                className="font-jakarta mt-2 rounded-lg border border-slate-300 p-4"
-              />
-            )}
-            name="username"
-          />
-          {errors.username && (
-            <Text className="font-jakarta mt-2 pl-4 text-red-500">
-              Username wajib diisi
-            </Text>
-          )}
-        </View>
-        <TouchableOpacity
-          disabled={isLoading}
-          onPress={handleSubmit(onSubmit)}
-          className="mt-3 flex flex-row items-center justify-center space-x-3 rounded-lg bg-emerald-500 p-3">
-          {isLoading ? (
-            <>
-              <ActivityIndicator size="small" color="#0000ff" />
-              <Text className="font-jakarta text-center text-xl font-semibold text-white">
-                Tunggu sebentar
+      {isScreenLoading ? (
+        <ActivityIndicator size={'large'} color={'#000'} />
+      ) : (
+        <ScrollView className="p-1.5" showsVerticalScrollIndicator={false}>
+          <View className="mt-3">
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, onBlur, value}}) => (
+                <View>
+                  <Text>Nama Lengkap</Text>
+                  <TextInput
+                    placeholder="Nama Lengkap"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    className="font-jakarta mt-2 rounded-lg border border-slate-300 p-4"
+                  />
+                </View>
+              )}
+              name="nama_lengkap"
+            />
+            {errors.nama_lengkap && (
+              <Text className="font-jakarta mt-2 pl-4 text-red-500">
+                Nama lengkap wajib diisi
               </Text>
-            </>
-          ) : (
-            <Text className="font-jakarta text-center text-xl font-semibold text-white">
-              Simpan
-            </Text>
-          )}
-        </TouchableOpacity>
-      </ScrollView>
+            )}
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, onBlur, value}}) => (
+                <View className="mt-6">
+                  <Text>Username</Text>
+                  <TextInput
+                    placeholder="Username"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    className="font-jakarta mt-2 rounded-lg border border-slate-300 p-4"
+                  />
+                </View>
+              )}
+              name="username"
+            />
+            {errors.username && (
+              <Text className="font-jakarta mt-2 pl-4 text-red-500">
+                Username wajib diisi
+              </Text>
+            )}
+          </View>
+          <TouchableOpacity
+            disabled={isLoading}
+            onPress={handleSubmit(onSubmit)}
+            className="mt-3 flex flex-row items-center justify-center space-x-3 rounded-lg bg-emerald-500 p-3">
+            {isLoading ? (
+              <>
+                <ActivityIndicator size="small" color="#0000ff" />
+                <Text className="font-jakarta text-center text-xl font-semibold text-white">
+                  Tunggu sebentar
+                </Text>
+              </>
+            ) : (
+              <Text className="font-jakarta text-center text-xl font-semibold text-white">
+                Simpan
+              </Text>
+            )}
+          </TouchableOpacity>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }

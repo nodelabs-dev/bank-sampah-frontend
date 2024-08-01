@@ -16,7 +16,7 @@ export default function Success({navigation}: any) {
         </Text>
         <View>
           <TouchableOpacity
-            onPress={() => navigation.navigate('HomeStack')}
+            onPress={() => navigation.navigate('Home')}
             className="mt-5 rounded-lg bg-stone-800 py-3">
             <Text className="font-jakarta text-center text-lg text-white">
               Kembali ke menu
