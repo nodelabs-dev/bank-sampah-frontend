@@ -36,7 +36,7 @@ export default function HistoryCard({
               </Text>
             </View>
           </View>
-          <View className="mt-9 bg-orange-600 w-auto p-1 rounded-md">
+          <View className="mt-6 bg-orange-600 w-auto p-1 rounded-md">
             <Text className="text-white text-center font-semibold font-jakarta">
               {createdAt}
             </Text>

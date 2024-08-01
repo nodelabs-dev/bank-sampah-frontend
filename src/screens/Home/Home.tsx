@@ -65,22 +65,28 @@ export default function Home({navigation}: any) {
           />
         </View>
       </LinearGradient>
-      <ScrollView className="mt-0 px-1.5">
+      <ScrollView className="mt-0 pt-2 px-1.5">
         <Menu
           title="Materi Pengolahan Sampah"
+          desc="Baca artikel-artikel terkait tata cara pengolahan sampah."
           navigate={() => navigation.navigate('Material')}>
           <Entypo name="open-book" color={'white'} size={50} />
         </Menu>
         <Menu
           title="Monitor Sampah"
+          desc="Tukar sampah yang Anda temukan dengan poin."
           navigate={() => navigation.navigate('Monitor')}>
           <MaterialIcons name="monitor-heart" color={'white'} size={50} />
         </Menu>
-        <Menu title="Tukar Poin" navigate={() => navigation.navigate('Point')}>
+        <Menu
+          title="Tukar Poin"
+          desc="Tukarkan poin Anda dengan barang-barang yang tersedia."
+          navigate={() => navigation.navigate('Point')}>
           <FontAwesome name="coins" color={'white'} size={50} />
         </Menu>
         <Menu
           title="Panggil Petugas"
+          desc="Panggil petugas untuk scan QR Code tukar sampah."
           navigate={() => navigation.navigate('Monitor')}>
           <FontAwesomeOrigin name="whatsapp" color={'white'} size={50} />
         </Menu>

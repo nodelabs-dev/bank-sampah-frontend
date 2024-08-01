@@ -54,13 +54,10 @@ export default function History({navigation}: any) {
                 key={item?.id}
                 trash={item?.jenis_sampah}
                 weight={item?.berat_sampah}
-                createdAt={formatDateTime(item?.created_at)}
-                navigate={() => navigation.navigate('Material')}>
+                createdAt={formatDateTime(item?.created_at)}>
                 <Image
-                  source={{
-                    uri: 'https://dlh.semarangkota.go.id/wp-content/uploads/2023/01/image_2023-01-02_153843788.png',
-                  }}
-                  className="w-28 h-28 rounded-md"
+                  source={require('../../assets/images/trashType.png')}
+                  className="w-24 h-24 rounded-md"
                 />
               </HistoryCard>
             ))
