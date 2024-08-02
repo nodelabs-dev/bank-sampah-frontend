@@ -9,6 +9,7 @@ export default function UserTradeCard({
   weight,
   qrcodeStatus,
   pointStatus,
+  disabled,
   createdAt,
 }: any) {
   const getTruncatedFullName = (name: string) => {
@@ -17,9 +18,9 @@ export default function UserTradeCard({
   };
 
   return (
-    <TouchableOpacity onPress={navigate}>
+    <TouchableOpacity onPress={navigate} disabled={disabled}>
       <LinearGradient
-        colors={['#047857', '#34d399']}
+        colors={disabled ? ['#2f2f2f', '#555'] : ['#047857', '#34d399']}
         start={{x: 0, y: 1}}
         end={{x: 1, y: 2}}
         className="flex flex-row items-start px-4 py-5 rounded-lg space-x-4 mt-2">

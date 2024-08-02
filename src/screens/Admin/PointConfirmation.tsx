@@ -69,6 +69,7 @@ export default function PointConfirmation({navigation}: any) {
                 }
                 fullname={item?.nama}
                 trash={item?.jenis_sampah}
+                disabled={item?.status === 'Selesai' ? true : false}
                 weight={item?.berat_sampah}
                 pointStatus={item?.status !== 'Selesai' ? 'Proses' : 'Terkirim'}
                 createdAt={formatDateTime(item?.created_at)}
