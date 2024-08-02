@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -18,6 +18,7 @@ import FontAwesomeOrigin from 'react-native-vector-icons/FontAwesome';
 import Menu from '../../components/Menu';
 import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/native';
+import SkeletonImage from '../../components/SkeletonImage';
 
 export default function Home({navigation}: any) {
   const [userData, setUserData] = useState<any>(null);
@@ -37,9 +38,6 @@ export default function Home({navigation}: any) {
       navigation.navigate('Login');
       setIsLoading(false);
     }
-
-    // const user: any = await AsyncStorage.getItem('user');
-    // setUserData(JSON.parse(user));
   };
 
   useFocusEffect(
@@ -68,9 +66,16 @@ export default function Home({navigation}: any) {
         ) : (
           <>
             <View>
-              <Image
-                source={require('../../assets/images/profile.jpeg')}
-                className="h-20 w-20 rounded-full border-2 border-emerald-100"
+              <SkeletonImage
+                uri={
+                  userData?.role !== 'admin'
+                    ? userData?.url_profil?.replace(
+                        './',
+                        `${process.env.API_URL}`,
+                      )
+                    : userData?.url_profil
+                }
+                style={{width: 80, height: 80, borderRadius: 50}}
               />
               <View className="flex mt-2 flex-row space-x-1">
                 <Text className="font-jakarta text-white text-xl">Halo,</Text>
@@ -79,12 +84,14 @@ export default function Home({navigation}: any) {
                 </Text>
               </View>
               <Text className="font-jakarta text-white">ZEROWASTEMATE</Text>
-              <View className="mt-3">
-                <Text className="text-white font-jakarta">
-                  Poin Anda{' '}
-                  <Text className="font-bold">{userData?.poin} Poin</Text>
-                </Text>
-              </View>
+              {userData?.role !== 'admin' ? (
+                <View className="mt-3">
+                  <Text className="text-white font-jakarta">
+                    Poin Anda{' '}
+                    <Text className="font-bold">{userData?.poin} Poin</Text>
+                  </Text>
+                </View>
+              ) : null}
             </View>
             <View>
               <Image
@@ -98,30 +105,49 @@ export default function Home({navigation}: any) {
       <ScrollView
         className="mt-0 pt-2 px-1.5 mb-2"
         showsVerticalScrollIndicator={false}>
-        <Menu
-          title="Materi Pengolahan Sampah"
-          desc="Baca artikel-artikel terkait tata cara pengolahan sampah."
-          navigate={() => navigation.navigate('Material')}>
-          <Entypo name="open-book" color={'white'} size={50} />
-        </Menu>
-        <Menu
-          title="Monitor Sampah"
-          desc="Tukar sampah yang Anda temukan dengan poin."
-          navigate={() => navigation.navigate('Monitor')}>
-          <MaterialIcons name="monitor-heart" color={'white'} size={50} />
-        </Menu>
-        <Menu
-          title="Tukar Poin"
-          desc="Tukarkan poin Anda dengan barang-barang yang tersedia."
-          navigate={() => navigation.navigate('Point')}>
-          <FontAwesome name="coins" color={'white'} size={50} />
-        </Menu>
-        <Menu
-          title="Panggil Petugas"
-          desc="Panggil petugas untuk scan QR Code tukar sampah."
-          navigate={() => navigation.navigate('Monitor')}>
-          <FontAwesomeOrigin name="whatsapp" color={'white'} size={50} />
-        </Menu>
+        {userData?.role === 'admin' ? (
+          <>
+            <Menu
+              title="QR Code"
+              desc="Buka QR Code untuk discan oleh pengguna."
+              navigate={() => navigation.navigate('QRCode')}>
+              <FontAwesomeOrigin name="qrcode" color={'white'} size={50} />
+            </Menu>
+            <Menu
+              title="Penukaran Poin"
+              desc="Lihat dan konfirmasi pengguna yang telah menukarkan sampah."
+              navigate={() => navigation.navigate('PointConfirmation')}>
+              <FontAwesome name="coins" color={'white'} size={50} />
+            </Menu>
+          </>
+        ) : (
+          <>
+            <Menu
+              title="Materi Pengolahan Sampah"
+              desc="Baca artikel-artikel terkait tata cara pengolahan sampah."
+              navigate={() => navigation.navigate('Material')}>
+              <Entypo name="open-book" color={'white'} size={50} />
+            </Menu>
+            <Menu
+              title="Monitor Sampah"
+              desc="Tukar sampah yang Anda temukan dengan poin."
+              navigate={() => navigation.navigate('Monitor')}>
+              <MaterialIcons name="monitor-heart" color={'white'} size={50} />
+            </Menu>
+            <Menu
+              title="Tukar Poin"
+              desc="Tukarkan poin Anda dengan barang-barang yang tersedia."
+              navigate={() => navigation.navigate('Point')}>
+              <FontAwesome name="coins" color={'white'} size={50} />
+            </Menu>
+            <Menu
+              title="Panggil Petugas"
+              desc="Panggil petugas untuk scan QR Code tukar sampah."
+              navigate={() => navigation.navigate('Monitor')}>
+              <FontAwesomeOrigin name="whatsapp" color={'white'} size={50} />
+            </Menu>
+          </>
+        )}
       </ScrollView>
     </View>
   );

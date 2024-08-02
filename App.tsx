@@ -19,6 +19,9 @@ import Edit from './src/screens/Profile/Edit';
 import MaterialDetail from './src/screens/Material/MaterialDetail';
 import PointDetail from './src/screens/Point/PointDetail';
 import Success from './src/screens/Point/Success';
+import QRCode from './src/screens/Admin/QRCode';
+import PointConfirmation from './src/screens/Admin/PointConfirmation';
+import SendPoint from './src/screens/Admin/SendPoint';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -88,6 +91,23 @@ function HomeStack() {
         component={QRScanner}
         options={{headerShown: false, title: 'QR Scanner'}}
       />
+
+      {/* ADMIN SCREEN */}
+      <Stack.Screen
+        name="QRCode"
+        component={QRCode}
+        options={{headerShown: true, title: 'QR Code'}}
+      />
+      <Stack.Screen
+        name="PointConfirmation"
+        component={PointConfirmation}
+        options={{headerShown: true, title: 'Konfirmasi Poin'}}
+      />
+      <Stack.Screen
+        name="SendPoint"
+        component={SendPoint}
+        options={{headerShown: true, title: 'Kirim Poin'}}
+      />
     </Stack.Navigator>
   );
 }
@@ -137,13 +157,18 @@ function MainTabs() {
 
 export default function App() {
   const [user, setUser] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getUserData = async () => {
-      const userData = await AsyncStorage.getItem('user');
-      setUser(userData);
-      setIsLoading(false);
+      try {
+        const userData = await AsyncStorage.getItem('user');
+        setUser(userData);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+        setIsLoading(false);
+      }
     };
 
     getUserData();

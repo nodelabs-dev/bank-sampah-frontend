@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import SkeletonImage from '../../components/SkeletonImage';
 
 export default function Profile({navigation}: any) {
   const [user, setUser] = useState<any>(null);
@@ -70,9 +71,9 @@ export default function Profile({navigation}: any) {
             start={{x: 0, y: 1}}
             end={{x: 1, y: 0}}
             className="flex items-center justify-center rounded-b-3xl bg-stone-800 px-6 py-8">
-            <Image
-              source={require('../../assets/images/profile.jpeg')}
-              className="h-28 w-28 rounded-full border-2 border-emerald-100"
+            <SkeletonImage
+              uri={user?.url_profil}
+              style={{width: 112, height: 112, borderRadius: 100}}
             />
             <Text className="font-jakarta mt-4 text-center text-2xl font-semibold text-white">
               {user?.nama_lengkap}
@@ -81,49 +82,53 @@ export default function Profile({navigation}: any) {
               {user?.email}
             </Text>
           </LinearGradient>
-          <View className="mt-5 p-0">
-            <Text className="font-jakarta pl-1.5 text-xl font-semibold text-slate-800">
-              Akun
-            </Text>
-            <View className="mt-4 flex space-y-6 rounded-none bg-white p-4">
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Edit')}
-                className="flex flex-row items-center space-x-3">
-                <AntDesign name={'user'} size={20} color={'grey'} />
-                <Text className="font-jakarta text-lg font-medium text-stone-700">
-                  Edit Profile
-                </Text>
-              </TouchableOpacity>
+          {user?.role !== 'admin' ? (
+            <View className="mt-5 p-0">
+              <Text className="font-jakarta pl-1.5 text-xl font-semibold text-slate-800">
+                Akun
+              </Text>
+              <View className="mt-4 flex space-y-6 rounded-none bg-white p-4">
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Edit')}
+                  className="flex flex-row items-center space-x-3">
+                  <AntDesign name={'user'} size={20} color={'grey'} />
+                  <Text className="font-jakarta text-lg font-medium text-stone-700">
+                    Edit Profile
+                  </Text>
+                </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={() => {
-                  Linking.openURL(
-                    'https://www.termsfeed.com/live/5e1fdee7-d342-4aae-b990-74bad531c599',
-                  );
-                }}
-                className="flex flex-row items-center space-x-3">
-                <AntDesign name={'infocirlceo'} size={20} color={'grey'} />
-                <Text className="font-jakarta text-lg font-medium text-stone-700">
-                  Kebijakan Privasi
-                </Text>
-              </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    Linking.openURL(
+                      'https://www.termsfeed.com/live/5e1fdee7-d342-4aae-b990-74bad531c599',
+                    );
+                  }}
+                  className="flex flex-row items-center space-x-3">
+                  <AntDesign name={'infocirlceo'} size={20} color={'grey'} />
+                  <Text className="font-jakarta text-lg font-medium text-stone-700">
+                    Kebijakan Privasi
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
+          ) : null}
           <View className="mt-4">
             <Text className="font-jakarta pl-1.5 text-xl font-semibold text-slate-800">
               Aksi
             </Text>
             <View className="mt-4 flex space-y-6 bg-white p-4">
-              <TouchableOpacity
-                onPress={() => {
-                  Linking.openURL('https://wa.me/6285157711068');
-                }}
-                className="flex flex-row items-center space-x-3">
-                <AntDesign name={'warning'} size={20} color={'orange'} />
-                <Text className="font-jakarta text-lg font-medium text-orange-400">
-                  Laporkan Masalah
-                </Text>
-              </TouchableOpacity>
+              {user?.role !== 'admin' ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    Linking.openURL('https://wa.me/6285157711068');
+                  }}
+                  className="flex flex-row items-center space-x-3">
+                  <AntDesign name={'warning'} size={20} color={'orange'} />
+                  <Text className="font-jakarta text-lg font-medium text-orange-400">
+                    Laporkan Masalah
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
 
               <TouchableOpacity
                 className="flex flex-row items-center space-x-3"
