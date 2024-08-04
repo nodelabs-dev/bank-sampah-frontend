@@ -125,6 +125,12 @@ export default function Home({navigation}: any) {
               navigate={() => navigation.navigate('GiftTradeHistory')}>
               <FontAwesome name="gifts" color={'white'} size={50} />
             </Menu>
+            <Menu
+              title="Data Pengguna"
+              desc="Lihat data pengguna yang sudah melakukan registrasi."
+              navigate={() => navigation.navigate('Users')}>
+              <FontAwesome name="users" color={'white'} size={50} />
+            </Menu>
           </>
         ) : (
           <>

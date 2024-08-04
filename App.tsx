@@ -23,6 +23,7 @@ import QRCode from './src/screens/Admin/QRCode';
 import PointConfirmation from './src/screens/Admin/PointConfirmation';
 import SendPoint from './src/screens/Admin/SendPoint';
 import GiftTradeHistory from './src/screens/Admin/GiftTradeHistory';
+import Users from './src/screens/Admin/Users';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -113,6 +114,11 @@ function HomeStack() {
         name="GiftTradeHistory"
         component={GiftTradeHistory}
         options={{headerShown: true, title: 'Penukaran Hadiah'}}
+      />
+      <Stack.Screen
+        name="Users"
+        component={Users}
+        options={{headerShown: true, title: 'Data Pengguna'}}
       />
     </Stack.Navigator>
   );
