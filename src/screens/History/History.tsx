@@ -20,7 +20,7 @@ export default function History({navigation}: any) {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.API_URL}/admin/tukar-poin`,
+        `${process.env.API_URL}/riwayat/tukar-poin`,
       );
       const sortedHistory = response?.data?.data?.sort(
         (a: any, b: any) =>
@@ -62,7 +62,9 @@ export default function History({navigation}: any) {
               </HistoryCard>
             ))
           ) : (
-            <Text>Riwayat Kosong</Text>
+            <View className="flex flex-1 mt-72 justify-center items-center">
+              <Text className="font-jakarta text-lg">Riwayat Kosong.</Text>
+            </View>
           )}
         </ScrollView>
       )}

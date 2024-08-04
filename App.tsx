@@ -125,6 +125,18 @@ function HomeStack() {
 }
 
 function MainTabs() {
+  const [userRole, setUserRole] = useState<any>(null);
+
+  useEffect(() => {
+    const getUserData = async () => {
+      const response = await AsyncStorage.getItem('user');
+      console.log('USER DATA APP.TSX === ', JSON.parse(response || 'null'));
+      const user = JSON.parse(response || '');
+      setUserRole(user?.role);
+    };
+
+    getUserData();
+  }, []);
   return (
     <Tab.Navigator
       initialRouteName="HomeStack"
@@ -153,11 +165,13 @@ function MainTabs() {
         component={HomeStack}
         options={{headerShown: false, title: 'Home'}}
       />
-      <Tab.Screen
-        name="Riwayat"
-        component={History}
-        options={{headerShown: true, title: 'Riwayat'}}
-      />
+      {userRole !== 'admin' ? (
+        <Tab.Screen
+          name="Riwayat"
+          component={History}
+          options={{headerShown: true, title: 'Riwayat'}}
+        />
+      ) : null}
       <Tab.Screen
         name="ProfileStack"
         component={ProfileStack}
