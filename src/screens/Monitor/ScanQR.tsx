@@ -46,7 +46,7 @@ const ScanQRPage = ({route, navigation}: any) => {
       />
       {isQRScanned ? (
         <TouchableOpacity
-          onPress={() => navigation.navigate('History')}
+          onPress={() => navigation.navigate('Riwayat')}
           style={styles.btn}>
           <Text style={{color: clr1}}>Cek Riwayat</Text>
         </TouchableOpacity>

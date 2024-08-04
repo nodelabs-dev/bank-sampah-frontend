@@ -22,6 +22,7 @@ import Success from './src/screens/Point/Success';
 import QRCode from './src/screens/Admin/QRCode';
 import PointConfirmation from './src/screens/Admin/PointConfirmation';
 import SendPoint from './src/screens/Admin/SendPoint';
+import GiftTradeHistory from './src/screens/Admin/GiftTradeHistory';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -107,6 +108,11 @@ function HomeStack() {
         name="SendPoint"
         component={SendPoint}
         options={{headerShown: true, title: 'Kirim Poin'}}
+      />
+      <Stack.Screen
+        name="GiftTradeHistory"
+        component={GiftTradeHistory}
+        options={{headerShown: true, title: 'Penukaran Hadiah'}}
       />
     </Stack.Navigator>
   );

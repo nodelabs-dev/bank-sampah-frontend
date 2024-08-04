@@ -3,18 +3,16 @@ import {useFocusEffect} from '@react-navigation/native';
 import axios from 'axios';
 import {useCallback, useState} from 'react';
 import {
-  SafeAreaView,
   ScrollView,
   Text,
   View,
   TouchableOpacity,
   Linking,
   ActivityIndicator,
-  Image,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import SkeletonImage from '../../components/SkeletonImage';
+import SkeletonPic from '../../components/SkeletonPic';
 
 export default function Profile({navigation}: any) {
   const [user, setUser] = useState<any>(null);
@@ -71,7 +69,7 @@ export default function Profile({navigation}: any) {
             start={{x: 0, y: 1}}
             end={{x: 1, y: 0}}
             className="flex items-center justify-center rounded-b-3xl bg-stone-800 px-6 py-8">
-            <SkeletonImage
+            <SkeletonPic
               uri={user?.url_profil}
               style={{width: 112, height: 112, borderRadius: 100}}
             />

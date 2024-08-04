@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useFocusEffect} from '@react-navigation/native';
 import axios from 'axios';
-import {useCallback, useState} from 'react';
+import {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
   ActivityIndicator,
@@ -41,7 +40,7 @@ export default function SendPoint({route, navigation}: any) {
       const response = await axios.post(
         `${process.env.API_URL}/admin/confirm-tukarpoin/${item?.id}`,
         {
-          poin_hasil: parseInt(data?.poin_hasil, 10), // Convert poin_hasil to number
+          poin_hasil: parseInt(data?.poin_hasil, 10),
         },
       );
 

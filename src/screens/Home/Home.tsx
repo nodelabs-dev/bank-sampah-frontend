@@ -18,7 +18,7 @@ import FontAwesomeOrigin from 'react-native-vector-icons/FontAwesome';
 import Menu from '../../components/Menu';
 import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/native';
-import SkeletonImage from '../../components/SkeletonImage';
+import SkeletonPic from '../../components/SkeletonPic';
 
 export default function Home({navigation}: any) {
   const [userData, setUserData] = useState<any>(null);
@@ -66,7 +66,7 @@ export default function Home({navigation}: any) {
         ) : (
           <>
             <View>
-              <SkeletonImage
+              <SkeletonPic
                 uri={
                   userData?.role !== 'admin'
                     ? userData?.url_profil?.replace(
@@ -118,6 +118,12 @@ export default function Home({navigation}: any) {
               desc="Lihat dan konfirmasi pengguna yang telah menukarkan sampah."
               navigate={() => navigation.navigate('PointConfirmation')}>
               <FontAwesome name="coins" color={'white'} size={50} />
+            </Menu>
+            <Menu
+              title="Penukaran Hadiah"
+              desc="Lihat riwayat pengguna yang menukar poin ke hadiah."
+              navigate={() => navigation.navigate('GiftTradeHistory')}>
+              <FontAwesome name="gifts" color={'white'} size={50} />
             </Menu>
           </>
         ) : (
