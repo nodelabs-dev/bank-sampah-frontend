@@ -218,7 +218,7 @@ export default function NewGift() {
           <TouchableOpacity
             disabled={isLoading}
             onPress={handleSubmit(onSubmit)}
-            className="mt-3 flex flex-row items-center justify-center space-x-3 rounded-lg bg-emerald-500 p-3">
+            className="mt-3 mb-5 flex flex-row items-center justify-center space-x-3 rounded-lg bg-emerald-500 p-3">
             {isLoading ? (
               <>
                 <ActivityIndicator size="small" color="#0000ff" />
