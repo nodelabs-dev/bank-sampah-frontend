@@ -24,6 +24,7 @@ import PointConfirmation from './src/screens/Admin/PointConfirmation';
 import SendPoint from './src/screens/Admin/SendPoint';
 import GiftTradeHistory from './src/screens/Admin/GiftTradeHistory';
 import Users from './src/screens/Admin/Users';
+import GiftManagement from './src/screens/Admin/GiftManagement';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -119,6 +120,11 @@ function HomeStack() {
         name="Users"
         component={Users}
         options={{headerShown: true, title: 'Data Pengguna'}}
+      />
+      <Stack.Screen
+        name="GiftManagement"
+        component={GiftManagement}
+        options={{headerShown: true, title: 'Kelola Barang'}}
       />
     </Stack.Navigator>
   );

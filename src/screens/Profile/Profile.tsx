@@ -122,7 +122,24 @@ export default function Profile({navigation}: any) {
                 </TouchableOpacity>
               </View>
             </View>
-          ) : null}
+          ) : (
+            <View className="bg-white p-5 mt-5">
+              <TouchableOpacity
+                className="flex flex-row items-center space-x-3"
+                onPress={handleLogout}>
+                <AntDesign name={'logout'} size={20} color={'red'} />
+                {isLogoutLoading ? (
+                  <View className="flex items-center justify-center">
+                    <ActivityIndicator size={'large'} color={'#000'} />
+                  </View>
+                ) : (
+                  <Text className="font-jakarta text-lg font-medium text-red-500">
+                    Keluar
+                  </Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          )}
         </ScrollView>
       )}
     </View>

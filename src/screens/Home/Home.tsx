@@ -7,6 +7,7 @@ import {
   View,
   Platform,
   ActivityIndicator,
+  Linking,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import FocusAwareStatusBar from '../../components/StatusBar';
@@ -19,6 +20,7 @@ import Menu from '../../components/Menu';
 import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/native';
 import SkeletonPic from '../../components/SkeletonPic';
+import MaterialComm from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function Home({navigation}: any) {
   const [userData, setUserData] = useState<any>(null);
@@ -131,11 +133,17 @@ export default function Home({navigation}: any) {
               navigate={() => navigation.navigate('Users')}>
               <FontAwesome name="users" color={'white'} size={50} />
             </Menu>
+            <Menu
+              title="Kelola Hadiah"
+              desc="Kelola hadiah untuk pengguna."
+              navigate={() => navigation.navigate('GiftManagement')}>
+              <MaterialComm name="monitor-shimmer" color={'white'} size={50} />
+            </Menu>
           </>
         ) : (
           <>
             <Menu
-              title="Materi Pengolahan Sampah"
+              title="Materi Pengelolaan Sampah"
               desc="Baca artikel-artikel terkait tata cara pengolahan sampah."
               navigate={() => navigation.navigate('Material')}>
               <Entypo name="open-book" color={'white'} size={50} />
@@ -154,8 +162,10 @@ export default function Home({navigation}: any) {
             </Menu>
             <Menu
               title="Panggil Petugas"
-              desc="Panggil petugas untuk scan QR Code tukar sampah."
-              navigate={() => navigation.navigate('Monitor')}>
+              desc="Hubungi petugas lewat WhatsApp."
+              navigate={() => {
+                Linking.openURL('https://wa.me/6285157711068');
+              }}>
               <FontAwesomeOrigin name="whatsapp" color={'white'} size={50} />
             </Menu>
           </>

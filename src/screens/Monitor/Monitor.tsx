@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Linking,
 } from 'react-native';
 import {Controller, useForm} from 'react-hook-form';
 import {useState, useEffect} from 'react';
@@ -58,6 +59,15 @@ export default function Monitor({navigation}: any) {
       setIsLoading(false);
       AlertPopup('Berhasil', 'Berhasil menukar sampah dengan poin.');
       navigation.navigate('ScanQR', {trashId});
+
+      const whatsappNumber = '6285157711068';
+      const message = `Halo petugas, saya ingin menukarkan sampah jenis ${data.jenis_sampah} dengan berat ${data.berat_sampah} gram, Terima Kasih!`;
+      const whatsappUrl = `whatsapp://send?phone=${whatsappNumber}&text=${encodeURIComponent(
+        message,
+      )}`;
+      Linking.openURL(whatsappUrl).catch(err =>
+        console.error('Failed to open WhatsApp', err),
+      );
     } catch (error) {
       console.error(error);
       setIsLoading(false);

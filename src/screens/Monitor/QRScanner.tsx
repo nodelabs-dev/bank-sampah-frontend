@@ -47,10 +47,10 @@ const QRScanner = (props: any) => {
 
     requestCameraPermission();
 
-    //if it is idle for 15 secs, it will be closed
-    setTimeout(() => {
-      props.onRead(null);
-    }, 15 * 1000);
+    // //if it is idle for 15 secs, it will be closed
+    // setTimeout(() => {
+    //   props.onRead(null);
+    // }, 15 * 1000);
   }, []);
 
   if (device == null || !hasPermission) {
@@ -81,20 +81,14 @@ const QRScanner = (props: any) => {
         </TouchableOpacity>
       </View>
       <View style={styles.footer}>
-        <TouchableOpacity
+        <Text
           style={{
-            paddingVertical: 8,
-            paddingHorizontal: 10,
-            borderWidth: 1,
-            borderRadius: 5,
-            borderColor: 'snow',
-            alignItems: 'center',
-          }}
-          onPress={() => {
-            props.onRead(null);
+            color: 'snow',
+            fontSize: 14,
+            fontFamily: 'Plus Jakarta Sans',
           }}>
-          <Text style={{color: 'snow', fontSize: 14}}>Close</Text>
-        </TouchableOpacity>
+          Scan QR Code dari petugas!
+        </Text>
       </View>
     </View>
   );

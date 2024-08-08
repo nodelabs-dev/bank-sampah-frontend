@@ -2,6 +2,7 @@ import React from 'react';
 import {SafeAreaView, ScrollView, Text, View, Image} from 'react-native';
 import formatDateTime from '../../helpers/dateFormatter';
 import SkeletonImage from '../../components/SkeletonImage';
+import Markdown from 'react-native-markdown-display';
 
 export default function MaterialDetail({route}: any) {
   const {item} = route.params;
@@ -28,9 +29,7 @@ export default function MaterialDetail({route}: any) {
           }}
         />
         <View className="pb-5">
-          <Text className="font-jakarta text-left text-lg leading-7 mb-4">
-            {item?.deskripsi}
-          </Text>
+          <Markdown>{item?.deskripsi}</Markdown>
           <Text className="font-jakarta text-sm text-gray-600">
             Kategori: {item?.kategori}
           </Text>

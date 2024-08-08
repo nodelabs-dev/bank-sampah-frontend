@@ -7,15 +7,18 @@ import {
   ScrollView,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import UsersCard from '../../components/UsersCard';
 import SkeletonImage from '../../components/SkeletonImage';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Users() {
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
 
   const getUsersHandler = async () => {
     setIsLoading(true);
@@ -28,6 +31,20 @@ export default function Users() {
     } catch (error) {
       console.error(error);
       setIsLoading(false);
+    }
+  };
+
+  const deleteUserHandler = async (id: number) => {
+    setIsDeleteLoading(true);
+    try {
+      await axios.delete(`${process.env.API_URL}/admin/delete-user/${id}`);
+      setUsers((prevUsers: any) =>
+        prevUsers.filter((user: any) => user.id !== id),
+      );
+      setIsDeleteLoading(false);
+    } catch (error) {
+      console.error('Failed to delete user:', error);
+      setIsDeleteLoading(false);
     }
   };
 
@@ -65,7 +82,7 @@ export default function Users() {
               onChangeText={setSearchQuery}
             />
           </View>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             {filteredUsers && filteredUsers.length > 0 ? (
               filteredUsers.map((user: any) => (
                 <UsersCard
@@ -78,6 +95,16 @@ export default function Users() {
                     uri={user?.url_profil}
                     style={{width: 112, height: 112, borderRadius: 8}}
                   />
+                  <View className="absolute right-3 top-3 z-50">
+                    <TouchableOpacity
+                      onPress={() => deleteUserHandler(user?.id)}>
+                      {isDeleteLoading ? (
+                        <ActivityIndicator size={'small'} color={'#fff'} />
+                      ) : (
+                        <Icon name="trash" size={24} color="red" />
+                      )}
+                    </TouchableOpacity>
+                  </View>
                 </UsersCard>
               ))
             ) : (

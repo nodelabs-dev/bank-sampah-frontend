@@ -12,6 +12,7 @@ const SkeletonImage = ({uri, style}: any) => {
         </View>
       )}
       <Image
+        className="bg-white"
         source={{uri}}
         style={[style, isLoading && styles.imageHidden]}
         onLoadEnd={() => setIsLoading(false)}
