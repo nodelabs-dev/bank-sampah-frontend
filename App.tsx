@@ -25,6 +25,7 @@ import SendPoint from './src/screens/Admin/SendPoint';
 import GiftTradeHistory from './src/screens/Admin/GiftTradeHistory';
 import Users from './src/screens/Admin/Users';
 import GiftManagement from './src/screens/Admin/GiftManagement';
+import NewGift from './src/screens/Admin/NewGift';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -124,7 +125,12 @@ function HomeStack() {
       <Stack.Screen
         name="GiftManagement"
         component={GiftManagement}
-        options={{headerShown: true, title: 'Kelola Barang'}}
+        options={{headerShown: true, title: 'Kelola Hadiah'}}
+      />
+      <Stack.Screen
+        name="NewGift"
+        component={NewGift}
+        options={{headerShown: true, title: 'Hadiah Baru'}}
       />
     </Stack.Navigator>
   );

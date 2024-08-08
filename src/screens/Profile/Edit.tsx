@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
 import axios from 'axios';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
   ActivityIndicator,

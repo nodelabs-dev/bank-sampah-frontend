@@ -11,9 +11,11 @@ import {
 } from 'react-native';
 import SkeletonImage from '../../components/SkeletonImage';
 import GiftCard from '../../components/GiftCard';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default function GiftManagement() {
+export default function GiftManagement({navigation}: any) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
   const [gifts, setGifts] = useState<any>(null);
 
   const getGiftsHandler = async () => {
@@ -34,10 +36,27 @@ export default function GiftManagement() {
       getGiftsHandler();
     }, []),
   );
+
+  const deleteUserHandler = async (id: number) => {
+    setIsDeleteLoading(true);
+    try {
+      await axios.delete(`${process.env.API_URL}/hadiah/delete/${id}`);
+      setGifts((prevGifts: any) =>
+        prevGifts.filter((gift: any) => gift.id !== id),
+      );
+      setIsDeleteLoading(false);
+    } catch (error) {
+      console.error('Failed to delete gift:', error);
+      setIsDeleteLoading(false);
+    }
+  };
+
   return (
     <SafeAreaView className="flex flex-1 justify-center">
       <View className="p-1.5">
-        <TouchableOpacity className="bg-yellow-400 py-3 rounded-lg">
+        <TouchableOpacity
+          className="bg-yellow-400 py-3 rounded-lg"
+          onPress={() => navigation.navigate('NewGift')}>
           <Text className="text-center font-medium font-jakarta text-lg">
             Tambah Hadiah
           </Text>
@@ -65,6 +84,15 @@ export default function GiftManagement() {
                   }
                   style={{width: 112, height: 112, borderRadius: 8}}
                 />
+                <View className="absolute right-4 bottom-4 z-50">
+                  <TouchableOpacity onPress={() => deleteUserHandler(item?.id)}>
+                    {isDeleteLoading ? (
+                      <ActivityIndicator size={'small'} color={'#fff'} />
+                    ) : (
+                      <Icon name="trash" size={24} color="red" />
+                    )}
+                  </TouchableOpacity>
+                </View>
               </GiftCard>
             ))
           ) : (
