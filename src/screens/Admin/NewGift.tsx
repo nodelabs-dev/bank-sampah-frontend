@@ -18,6 +18,8 @@ export default function NewGift() {
   const [isScreenLoading, setIsScreenLoading] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [imageUri, setImageUri] = useState<string | null>(null);
+  const [imageType, setImageType] = useState<string | null>(null);
+  const [imageName, setImageName] = useState<string | null>(null);
 
   const {
     control,
@@ -43,11 +45,11 @@ export default function NewGift() {
       formData.append('stock', data.stock);
       formData.append('deskripsi', data.description);
 
-      if (imageUri) {
+      if (imageUri && imageType && imageName) {
         formData.append('UrlImg', {
           uri: imageUri,
-          type: 'image/jpeg',
-          name: 'photo.jpg',
+          type: imageType,
+          name: imageName,
         });
       }
 
@@ -86,8 +88,14 @@ export default function NewGift() {
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        const uri = response.assets[0].uri;
+        const asset = response.assets[0];
+        const uri = asset.uri;
+        const type = asset.type;
+        const fileName = asset.fileName || `photo.${type.split('/')[1]}`;
+
         setImageUri(uri);
+        setImageType(type);
+        setImageName(fileName);
       }
     });
   };
@@ -188,6 +196,13 @@ export default function NewGift() {
               </Text>
             )}
           </View>
+          <TouchableOpacity
+            onPress={selectImage}
+            className="mt-6 flex flex-row items-center justify-center space-x-3 rounded-lg border border-emerald-500 p-3">
+            <Text className="font-jakarta text-center text-xl font-semibold text-emerald-500">
+              Pilih Gambar
+            </Text>
+          </TouchableOpacity>
           {imageUri && (
             <Image
               source={{uri: imageUri}}
@@ -201,17 +216,9 @@ export default function NewGift() {
             />
           )}
           <TouchableOpacity
-            onPress={selectImage}
-            className="mt-6 flex flex-row items-center justify-center space-x-3 rounded-lg border border-emerald-500 p-3">
-            <Text className="font-jakarta text-center text-xl font-semibold text-emerald-500">
-              Pilih Gambar
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
             disabled={isLoading}
             onPress={handleSubmit(onSubmit)}
-            className="mt-3 mb-5 flex flex-row items-center justify-center space-x-3 rounded-lg bg-emerald-500 p-3">
+            className="mt-3 flex flex-row items-center justify-center space-x-3 rounded-lg bg-emerald-500 p-3">
             {isLoading ? (
               <>
                 <ActivityIndicator size="small" color="#0000ff" />
